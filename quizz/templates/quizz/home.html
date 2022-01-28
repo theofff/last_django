@@ -1,4 +1,7 @@
 <h1>Quizz</h1>
 
+{% load static %}
+
+<img src="{% static 'quizz/grumpy.jpg' %}">
 
 <button><a class="btn btn-primary" href="{% url 'quizz:loginuser' %}"><p>Log in</p></a></button>
