@@ -74,7 +74,7 @@ def question(request, theme_id):
             context["theme_suivant"]=theme_suivant_id
         if index_theme != theme_list[0] :
             theme_precedant = theme_list[index_theme - 1]
-            theme_precedant = theme_precedant.id
+            theme_precedant_id = theme_precedant.id
             context["theme_precedant"]=theme_precedant_id
         #theme_suivant_id = theme_suivant.id
         #theme_precedant_id = theme_precedant.id
