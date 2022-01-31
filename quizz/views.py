@@ -76,14 +76,14 @@ def question(request, theme_id):
                 theme_suivant_id = theme_suivant.id
                 context["theme_suivant"]=theme_suivant_id
             except: 
-                return render(request, 'quizz/theme.html', {'authenticated':authenticated,'latest_theme_list': latest_theme_list})
+                pass
         if index_theme != theme_list[0] :
             try:
                 theme_precedant = theme_list[index_theme - 1]
                 theme_precedant_id = theme_precedant.id
                 context["theme_precedant"]=theme_precedant_id
             except: 
-                return render(request, 'quizz/theme.html', {'authenticated':authenticated,'latest_theme_list': latest_theme_list})
+                pass
         #theme_suivant_id = theme_suivant.id
         #theme_precedant_id = theme_precedant.id
         #if theme_precedant != 0 :
