@@ -11,7 +11,6 @@ urlpatterns = [
     path('loginuser', views.loginuser, name='loginuser'),
     path('newuser', views.newuser, name='newuser'),   
     path('question', views.question, name='question'),
-    path('results', views.results, name='results'),
     path('score', views.score, name='score'),
     path('home', views.home, name='home'),
     path('contact', views.contact, name='contact')
