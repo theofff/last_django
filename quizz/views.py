@@ -62,14 +62,19 @@ def question(request, theme_id):
                 score += 1
         score = str(score) + "/" + str(nb_question)
         context["score"]=score
-        theme_text= Theme.objects.get(pk=theme_id)
-        theme_text=theme_text.theme_text 
+        theme= Theme.objects.get(pk=theme_id)
+        theme_text=theme.theme_text 
         score= Score.objects.create(theme=theme_text, score=score, user=username)
         score.save()
-        if theme_id != nb_theme :
-            theme_suivant = theme_list[theme_id + 1]
-        if theme_id != 1 :
-            theme_precedant = theme_list[theme_id - 1]
+        index_theme = theme_list.index(theme)
+        if index_theme != theme_list[-1] :
+            theme_suivant = theme_list[index_theme + 1]
+            theme_suivant_id = theme_suivant.id
+            context["theme_suivant"]=theme_suivant_id
+        if index_theme != theme_list[0] :
+            theme_precedant = theme_list[index_theme - 1]
+            theme_precedant = theme_precedant.id
+            context["theme_precedant"]=theme_precedant_id
         #theme_suivant_id = theme_suivant.id
         #theme_precedant_id = theme_precedant.id
         #if theme_precedant != 0 :
