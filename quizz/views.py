@@ -24,7 +24,8 @@ def theme(request):
     return render(request, 'quizz/theme.html', context)
 
 def question(request, theme_id):
-
+    theme_list = Theme.objects.order_by('id')
+    nb_theme = len(theme_list)
     question_list = Question.objects.filter(theme=theme_id)
     context = {
         'theme_id': theme_id,
@@ -65,17 +66,35 @@ def question(request, theme_id):
         theme_text=theme_text.theme_text 
         score= Score.objects.create(theme=theme_text, score=score, user=username)
         score.save()
+        theme_suivant = theme_id + 1
+        theme_precedant = theme_id - 1
+        if theme_precedant != 0 :
+            context["theme_precedant"]=theme_precedant
+        if theme_id != nb_theme :
+            context["theme_suivant"]=theme_suivant
 
         return render(request, 'quizz/results.html', context)
 
-def results(request, theme_id):
-    question_list = Question.objects.filter(theme=theme_id)
-    context = {
-        'question_list': question_list,
-        'theme_id': theme_id
-    }
+#def results(request, theme_id):
+    #theme_list = Theme.objects.order_by('id')
+    #nb_theme = len(theme_list)
+    #question_list = Question.objects.filter(theme=theme_id)
+    ##if theme_id == 1 and theme_id != nb_theme:
+    #theme_suivant = theme_id + 1
+    #    #theme_precedant = "Pas de theme précédant"
+    ##if theme_id == nb_theme and theme_id != 1:
+    ##    theme_precedant = theme_id - 1
+    ##    theme_suivant = "Pas de theme suivant"
+#
+    #context = {
+    #    'question_list': question_list,
+    #    'theme_id': theme_id,
+    #    'theme_suivant' : theme_suivant,
+    #    #'theme_precedant' : theme_precedant
+    #}
+    #print(theme_suivant)
 
-    return render(request, 'quizz/results.html', context)
+    #return render(request, 'quizz/results.html')#, context)
 
 #def choice(request, question_id):
 #    #question_list = Question.objects.filter(theme=theme_id)
@@ -87,7 +106,10 @@ def results(request, theme_id):
 #    return render(request, 'quizz/choice.html', context)
 
 def home(request):
-    return render(request, 'quizz/home.html')
+    try:
+        return render(request, 'quizz/home.html', {'authenticated':authenticated})
+    except:
+        return render(request, 'quizz/home.html')
 
 
 
@@ -161,22 +183,21 @@ def score(request):
     return render(request, 'quizz/score.html', context)
 
 def contact(request):
+    context = {"authenticated" : authenticated}
     if request.method == "GET":
-        return render(request, 'quizz/contact.html')
+        return render(request, 'quizz/contact.html', context)
     if request.method == "POST":
-        comment = request.POST.get('comment')
-        question = request.POST.get('question')
-        #Comment.choice_set.create(remark=remark)
-        #Comment.remark = remark
-        #Comment.save()
-        comment = Comment.objects.create(comment=comment)
+        comment_txt = request.POST.get('comment')
+        question_txt = request.POST.get('question')
+        comment = Comment.objects.create(comment=comment_txt)
         comment.save()
-        question = New_Question.objects.create(question=question)
+        question = New_Question.objects.create(question=question_txt)
         question.save()
 
-        if comment != "" or question !="":
-            context={"message": "Vos requêtes ont bien été transmises à l'administration!"}
+        if comment_txt != "" or question_txt !="":
+            context["message"] = "Vos requêtes ont bien été transmises à l'administration!"
         else: 
-            context={"message": "Veuillez renseigner un des champs."}
+            context["message"] = "Veuillez renseigner un des champs."
+        
         return render(request, 'quizz/contact.html', context) 
     
