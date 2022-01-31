@@ -9,7 +9,7 @@ node {
               host='10.132.0.21'
               urlrepo='https://github.com/theofff/last_django.git'
               folder=\$(echo  \$urlrepo | cut -d '/' -f 5 | cut -d '.' -f 1)
-              imagename='concarneau:5002/django_concarneau'
+              imagename='theo237/django_concarneau'
               image=\$(echo \"\$imagename\" | cut -d '/' -f 2)
               latest=\$(ssh \$user@\$host \"ls /var/lib/docker/volumes/ssh-guillaume-fixe_registry_data/_data/docker/registry/v2/repositories/\"\$image\"/_manifests/tags/ | sort -n | tail -n 1\")
               tagto=\$(bc -l <<< \"scale=1; \$latest+0.1\")
@@ -17,8 +17,9 @@ node {
               git clone -b v6 --single-branch \$urlrepo
               docker build -t \$imagename:\$tagto \$folder
               docker push \$imagename:\$tagto
-              docker rm -f app_django || echo "pas de containeur app_django up"
-              docker run -d --name app_django --restart unless-stopped -p 0.0.0.0:8083:8083 \$imagename:\$tagto
+              sed "s#$imagename.*#$imagename:$tagto#" deployment.yml
+              sudo kubectl apply -f deployment.yml
+              docker image rm $imagename:$tagto
               rm -rf \$folder
               "
               """
