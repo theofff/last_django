@@ -1,0 +1,8 @@
+docker build -t appli_django /var/jenkins_home/workspace/integration_jenkins_github/
+docker tag appli_django theo237/repo_django:80
+docker push theo237/repo_django:80
+
+
+#[en ssh:]
+docker rm -f app_django || echo "pas de containeur app_django up"
+docker run -d --name app_django --restart unless-stopped -p 0.0.0.0:8083:8083 theo237/repo_django:80
