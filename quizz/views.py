@@ -67,6 +67,7 @@ def question(request, theme_id):
         score= Score.objects.create(theme=theme_text, score=score, user=username)
         score.save()
         theme_list = list(theme_list)
+        theme_list = theme_list[::-1]
         index_theme = theme_list.index(theme)
         if index_theme != theme_list[-1] :
             theme_suivant = theme_list[index_theme + 1]
