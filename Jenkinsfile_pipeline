@@ -19,7 +19,7 @@ node {
               docker push \$imagename:\$tagto
               sed "s#\$imagename.*#\$imagename:\$tagto#" deployment.yml
               sudo kubectl apply -f deployment.yml
-              docker image rm $imagename:$tagto
+              docker image rm \$imagename:\$tagto
               rm -rf \$folder
               "
               """
