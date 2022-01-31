@@ -21,19 +21,19 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'quizz:theme' %}">Theme</a>
+          <a class="nav-link active" href="{% url 'quizz:theme' %}">Theme</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'quizz:score' %}">Scores</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'quizz:contact' %}">Contact</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'quizz:contact' %}">Contact</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'quizz:loginuser' %}">Log Out</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'quizz:loginuser' %}">Log Out</a>
           </li>
-        <li class="nav-item">
-            <a class="nav-link" ><h5 align="right"> Bonchour {{ request.user.username }}</h5></a>
+          <li class="nav-item">
+          <a class="nav-link active" aria-current="page" ><h5> Bonchour {{ request.user.username }}</h5></a>
         </li>
       </ul>
     </div>
@@ -54,7 +54,10 @@
 
     <ul>
     {% for theme in latest_theme_list %}
-        <li><a href="{% url 'quizz:question' theme.id %}">{{ theme.theme_text }}</a></li>
+    {% with count_question=forloop.counter %}
+    <center><h3>Theme {{count_question}} : <a href="{% url 'quizz:question' theme.id %}">{{ theme.theme_text }}</a></h3></center>
+    <br>
+    {% endwith %}
     {% endfor %}
     </ul>
     {% else %}
