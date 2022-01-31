@@ -17,7 +17,7 @@ node {
               git clone -b v6 --single-branch \$urlrepo
               docker build -t \$imagename:\$tagto \$folder
               docker push \$imagename:\$tagto
-              sed "s#$imagename.*#$imagename:$tagto#" deployment.yml
+              sed "s#\$imagename.*#\$imagename:$tagto#" deployment.yml
               sudo kubectl apply -f deployment.yml
               docker image rm $imagename:$tagto
               rm -rf \$folder
