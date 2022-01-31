@@ -66,14 +66,16 @@ def question(request, theme_id):
         theme_text=theme_text.theme_text 
         score= Score.objects.create(theme=theme_text, score=score, user=username)
         score.save()
-        theme_suivant = theme_list[theme_id + 1]
-        theme_suivant_id = theme_suivant.id
-        theme_precedant = theme_list[theme_id - 1]
-        theme_precedant_id = theme_precedant.id
-        if theme_precedant != 0 :
-            context["theme_precedant"]=theme_precedant_id
         if theme_id != nb_theme :
-            context["theme_suivant"]=theme_suivant_id
+            theme_suivant = theme_list[theme_id + 1]
+        if theme_id != 1 :
+            theme_precedant = theme_list[theme_id - 1]
+        #theme_suivant_id = theme_suivant.id
+        #theme_precedant_id = theme_precedant.id
+        #if theme_precedant != 0 :
+        #    context["theme_precedant"]=theme_precedant_id
+        #if theme_id != nb_theme :
+        #    context["theme_suivant"]=theme_suivant_id
 
         return render(request, 'quizz/results.html', context)
 
