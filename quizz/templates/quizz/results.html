@@ -28,11 +28,11 @@
 {% endfor %}
 {% if score %}
 <h5>Tu as un score de {{ score }}</h5>
-{% if theme_suivant %}
-<button><a class="btn btn-black" href="{% url 'quizz:question' theme_suivant %}"><p>Theme suivant</p></a></button>
-{% endif %}
 {% if theme_precedant %}
 <button><a class="btn btn-black" href="{% url 'quizz:question' theme_precedant %}"><p>Theme précédant</p></a></button>
+{% endif %}
+{% if theme_suivant %}
+<button><a class="btn btn-black" href="{% url 'quizz:question' theme_suivant %}"><p>Theme suivant</p></a></button>
 {% endif %}
 {% endif %}
 </center>
