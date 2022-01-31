@@ -11,7 +11,7 @@ def folder = "\$(echo  \$urlrepo | cut -d '/' -f 5 | cut -d '.' -f 1)"
 @Field
 def imagename = 'concarneau:5002/django_concarneau'
 @Field
-def image = "$(\$(echo \"\$imagename\" | cut -d '/' -f 2))"
+def image = "\$(echo \"\$imagename\" | cut -d '/' -f 2)"
 @Field
 def latest = "\$(ssh \$user@\$host \"ls /var/lib/docker/volumes/ssh-guillaume-fixe_registry_data/_data/docker/registry/v2/repositories/\"\$image\"/_manifests/tags/ | sort -n | tail -n 1\")"
 @Field
